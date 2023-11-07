@@ -1,0 +1,22 @@
+<div>
+  <h2>Component: data-cs <br> Store: @ngrx/component-store</h2>
+
+
+  <ul *ngFor="let user of users$ | async">
+    <ng-container *ngTemplateOutlet="displayUser; context: { $implicit: user }"></ng-container>
+  </ul>
+</div>
+
+<ng-template #displayUser let-user>
+  <div *ngFor="let key of getObjectKeys(user)">
+    <ng-container *ngIf="isObject(user[key]); else displayValue">
+      {{ key }}:
+      <ul>
+        <ng-container *ngTemplateOutlet="displayUser; context: { $implicit: user[key] }"></ng-container>
+      </ul>
+    </ng-container>
+    <ng-template #displayValue>
+      {{ key }}: {{ user[key] }}
+    </ng-template>
+  </div>
+</ng-template>

@@ -2,15 +2,37 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { StoreModule } from '@ngrx/store';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JsonInterceptor } from './json.interceptor';
+import { reducer } from './store/data.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { DataComponent } from './data/data.component';
+import { DataApiService } from './services/data-api.service';
+import { DataEffects } from './store/data.effects';
+import { DataCsComponent } from './data-cs/data-cs.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DataComponent,
+    DataCsComponent,
   ],
   imports: [
-    BrowserModule
+    HttpClientModule,
+    BrowserModule,
+    StoreModule.forRoot({data: reducer }),
+    EffectsModule.forRoot([DataEffects]),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JsonInterceptor,
+      multi: true
+    },
+    DataApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
