@@ -12,6 +12,8 @@ import { DataComponent } from './data/data.component';
 import { DataApiService } from './services/data-api.service';
 import { DataEffects } from './store/data.effects';
 import { DataCsComponent } from './data-cs/data-cs.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,10 +22,12 @@ import { DataCsComponent } from './data-cs/data-cs.component';
     DataCsComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
     StoreModule.forRoot({data: reducer }),
     EffectsModule.forRoot([DataEffects]),
+    BrowserAnimationsModule,
   ],
   providers: [
     {

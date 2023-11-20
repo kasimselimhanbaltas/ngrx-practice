@@ -16,8 +16,11 @@ export class DataApiService {
   fetchCount = 0;
   getData(): Observable<user[]> {
     console.log(this.fetchCount++)
-    return this.http.get<user[]>(this.apiUrl);
+    return this.http.get<user[]>(this.apiUrl).pipe(
+
+    );
   }
+  // mergeMap, switchMap, 
 
   // getData(): Observable<user[]> {
   //   let result = new Subject<user[]>();

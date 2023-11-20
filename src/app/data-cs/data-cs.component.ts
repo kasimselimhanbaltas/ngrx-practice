@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { UsersStore } from './data-cs.store';
+import { DataApiService } from '../services/data-api.service';
+import { Observable } from 'rxjs';
+import { user } from '../store/data.state';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-data-cs',
@@ -9,10 +13,13 @@ import { UsersStore } from './data-cs.store';
 })
 export class DataCsComponent {
 
-  users$ = this.usersStore.users$;
- 
-  constructor(private readonly usersStore: UsersStore) {
-    this.usersStore.getUsers();
+  users$: Observable<user[]>;
+  userForm: FormGroup;
+
+
+  constructor(private readonly usersStore: UsersStore, private userService: DataApiService, private fb: FormBuilder) {
+    //this.usersStore.getUsers();
+    this.users$ = this.userService.getData();
   }
 
   
